@@ -45,7 +45,7 @@ the script will exit early with a non-zero status.
 
 "**I have added a new field**"
 
-This supports `present` and `past` tense verbs.
+This supports `present`, `imperative`, and `past` tense verbs.
 
 ### No Second Line
 This rule verifies that the second line in a commit message is
@@ -101,7 +101,7 @@ If you want to check whether a certain file has been modified such as a
 
 ### Contains Pattern
 Sometimes simple string matching is not enough. This rule will check
-every line for the instance of a regular expression. 
+every line for the instance of a regular expression.
 
 `git log -1 --pretty=%B | head -n1 | ./rules/has-pattern.sh <regex>`
 

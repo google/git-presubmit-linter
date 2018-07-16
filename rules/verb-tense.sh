@@ -22,6 +22,7 @@ if [ "$#" -lt 1 ]; then
     echo "Values: "
     echo "  present - Add*s*"
     echo "  past - Add*ed*"
+    echo "  imperative - Add"
     exit 1
 fi
 
@@ -49,6 +50,19 @@ elif [ "$1" == "past" ]; then
     if [ $? -ne 0 ]; then
         echo $msg
         echo "The first line of the commit message is not in the past tense"
+        exit 1
+    fi
+elif [ "$1" == "imperative" ]; then
+    # Use the imperative form only
+    # "Add"
+    # "Remove"
+    # "Check"
+    echo "Checking for imperative-tense in commit messages"
+    # This regular expression matches past or present. Check that grep does not match.
+    echo $msg | grep -E '^[A-Z][a-z]*[es]d?\s'
+    if [ $? -eq 0 ]; then
+        echo $msg
+        echo "The first line of the commit message is not in the imperative tense"
         exit 1
     fi
 fi

@@ -21,6 +21,7 @@ commit_msg_present_2="He adds new field to protobuf and sample"
 commit_msg_present_3="Triple-checks exception"
 commit_msg_past="Added new field to protobuf and sample"
 commit_msg_past_2="She Added new field to protobuf and sample"
+commit_msg_imperative="Add new field to protobuf and sample"
 
 # Verify that present-tense checking passes with present-tense verb
 echo "$commit_msg_present" | ./rules/verb-tense.sh present
@@ -66,6 +67,27 @@ fi
 
 # Verify that past-tense checking fails if it doesn't start with verb
 echo "$commit_msg_past_2" | ./rules/verb-tense.sh past
+if [ $? -eq 0 ]; then
+    echo "Test failed"
+    exit 1
+fi
+
+# Verify that imperative-tense checking succeeds with imperative-tense verb
+echo "$commit_msg_imperative" | ./rules/verb-tense.sh imperative
+if [ $? -ne 0 ]; then
+    echo "Test failed"
+    exit 1
+fi
+
+# Verify that imperative-tense checking fails with present-tense verb
+echo "$commit_msg_present" | ./rules/verb-tense.sh imperative
+if [ $? -eq 0 ]; then
+    echo "Test failed"
+    exit 1
+fi
+
+# Verify that imperative-tense checking fails with past-tense verb
+echo "$commit_msg_past" | ./rules/verb-tense.sh imperative
 if [ $? -eq 0 ]; then
     echo "Test failed"
     exit 1
