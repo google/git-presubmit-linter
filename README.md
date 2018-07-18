@@ -186,5 +186,13 @@ first.
 
 The list of approved licenses, `approved-licenses.txt`, is a text file with each approved license on a new line in the spdx format.
 
+### Filepath exists
+This rule finds all filenames in provided files, such as documentation,
+and verifies that the file exists either in that directory or in general.
+
+If it is a URL, this script will check that the URL returns a `200` status code.
+
+`cat *.md | ./rules/path-exists.sh`
+
 ## License
 See `LICENSE`.
