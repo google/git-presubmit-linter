@@ -123,5 +123,18 @@ Style guides may require this to be removed.
 
 `git diff HEAD~1 --pretty=%B | ./rules/trailing-whitespace.sh`
 
+## Tools
+This repo also contains tools to be run during a presubmit task. These do
+not verify the git metadata or other project details, but can produce
+useful artifacts that may be part of the presubmit process.
+
+### Changelog
+This tool will generate a changelog between two points in your git history in
+a Markdown format, with the summary of each commit prepended by an asterisk.
+
+`./tools/changelog.sh` - Generates a changelog between HEAD and the most recent tag
+`./tools/changelog.sh v1.0.0` - Generates a changelog between HEAD and the provided revision
+`./tools/changelog.sh v1.0.0 v1.0.1` - Generates a changelog between the two revisions
+
 ## License
 See `LICENSE`.
