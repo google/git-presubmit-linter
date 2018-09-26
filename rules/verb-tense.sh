@@ -59,7 +59,7 @@ elif [ "$1" == "imperative" ]; then
     # "Check"
     echo "Checking for imperative-tense in commit messages"
     # This regular expression matches past or present. Check that grep does not match.
-    echo $msg | grep -E '^[A-Z][a-z]*[es]d?\s'
+    echo $msg | grep -P '(?:(?:^[A-Z][a-z]*(?:ed|s)\s)|(?:^[A-Z]\s))'
     if [ $? -eq 0 ]; then
         echo $msg
         echo "The first line of the commit message is not in the imperative tense"
