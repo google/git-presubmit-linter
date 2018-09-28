@@ -136,5 +136,23 @@ a Markdown format, with the summary of each commit prepended by an asterisk.
 `./tools/changelog.sh v1.0.0` - Generates a changelog between HEAD and the provided revision
 `./tools/changelog.sh v1.0.0 v1.0.1` - Generates a changelog between the two revisions
 
+### Generate sanitized archives
+This tool will generate zipped archives of specific directories and the files inside.
+Unlike a standard `zip` command, this tool will check each file against a blocklist,
+denoted as the file `.archiveignore`, and prevent any unwanted files (credentials, build files, etc.)
+from being added to your archive.
+
+An `.archiveignore` is a simple list of files, separated by newlines. It checks against the filename, so
+any part that matches will block it from being included in the archive.
+
+```
+file1.txt
+file2.txt
+zip
+```
+
+`./tools/archive.sh myfiles.zip "*"` - Puts all non-blocked files in an archive called `myfiles.zip`
+`./tools/archive.sh myfiles.zip /src "*"` - Puts all non-blocked files from the `src` directory in an archive called `myfiles.zip`
+
 ## License
 See `LICENSE`.
