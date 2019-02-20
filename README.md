@@ -178,5 +178,13 @@ will check the input against the current list of licenses.
 
 This will return 0 or 1 depending if the license is valid or invalid, respectively.
 
+A second tool exists which can validate a list of dependencies against an approved list of licenses.
+This tool pulls licensing information from https://libraries.io, and requires an API key to be obtained
+first.
+
+`cat requirements.txt | sed -r 's/([A-Za-z-]*).*/\1/g' | ./tools/spdx-dependencies.sh pypi approved-licenses.txt <libraries.io api key>`
+
+The list of approved licenses, `approved-licenses.txt`, is a text file with each approved license on a new line in the spdx format.
+
 ## License
 See `LICENSE`.
