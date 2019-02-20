@@ -167,5 +167,16 @@ The `listoffiles.txt` can contain a series of regular expressions. Be sure to es
 file\\d\\.txt
 ```
 
+### SPDX Licenses
+Code licenses can be identified using the SPDX license list in a standardized way.
+(https://spdx.org/licenses/)
+
+To make it easy for developers to validate individual licenses, a tool has been created that
+will check the input against the current list of licenses.
+
+`echo "MIT" | ./tools/spdx.sh`
+
+This will return 0 or 1 depending if the license is valid or invalid, respectively.
+
 ## License
 See `LICENSE`.
