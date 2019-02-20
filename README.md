@@ -154,5 +154,18 @@ zip
 `./tools/archive.sh myfiles.zip "*"` - Puts all non-blocked files in an archive called `myfiles.zip`
 `./tools/archive.sh myfiles.zip /src "*"` - Puts all non-blocked files from the `src` directory in an archive called `myfiles.zip`
 
+### Verify package contents
+This tool will take in a list of files, which can come from an archive file, and check each file
+against a list of regular expressions. If an packaged file does not match any of the regular
+expressions, the tool will report the file and fail.
+
+`tar -tf myfiles.tar.gz | ./tools/filelist.sh ./listoffiles.txt`
+
+The `listoffiles.txt` can contain a series of regular expressions. Be sure to escape backslashes.
+
+```
+file\\d\\.txt
+```
+
 ## License
 See `LICENSE`.
