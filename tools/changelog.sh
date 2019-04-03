@@ -5,7 +5,7 @@
 #   ./tools/changelog.sh github/v2.1.0 github/v2.1.3
 if [ "$#" -eq 0 ]; then
     # Use last tag and HEAD
-    tag=$(git tag --sort=-creatordate | sed -ne 2p)
+    tag=$(git tag --sort=-creatordate | sed -ne 1p)
     git log --pretty=%s $tag..HEAD | sed 's/^/* /'
 elif [ "$#" -eq 1 ]; then
     # Use included tag and HEAD
