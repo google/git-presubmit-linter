@@ -43,6 +43,13 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Verifies that the file has valid urls
+cat ./rules/tests/path-exists-examples/valid-url301-readme.md | ./rules/path-exists.sh --allow-redirects
+if [ $? -ne 0 ]; then
+    echo "Test failed"
+    exit 1
+fi
+
 # Verifies that the file has invalid urls
 cat ./rules/tests/path-exists-examples/invalid-url-readme.md | ./rules/path-exists.sh
 if [ $? -eq 0 ]; then

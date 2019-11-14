@@ -190,9 +190,12 @@ The list of approved licenses, `approved-licenses.txt`, is a text file with each
 This rule finds all filenames in provided files, such as documentation,
 and verifies that the file exists either in that directory or in general.
 
-If it is a URL, this script will check that the URL returns a `200` status code.
+If it is a URL, this script will check that the URL returns a `200` status code. If you also
+want to allow redirects to pass, use the flag `--allow-redirects`.
 
 `cat *.md | ./rules/path-exists.sh`
+
+`cat *.md | ./rules/path-exists.sh --allow-redirects`
 
 ## License
 See `LICENSE`.

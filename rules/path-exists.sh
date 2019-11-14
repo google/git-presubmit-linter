@@ -16,20 +16,33 @@
 #
 # Example usage:
 #   cat *.md | ./rules/path-exists.sh
+#   cat *.md | ./rules/path-exists.sh --allow-redirects
 
 # grep all filenames and URLs, then remove any ` characters
 STDIN=`cat`
 FILES=$(echo $STDIN |\
-    grep -Po '[\s\b`](:?\.?\/?\w+)*[\w_-]+\.\w+`?' |\
+    grep -Po '[\s\b`](:?\.?\/?\w+)*[\w_-]+\.[a-z]\w+`?' |\
     cut -d "\`" -f 2)
 URLS=$(echo $STDIN |\
     grep -Po 'https?:\/\/[\w./-]+' |\
     cut -d "\`" -f 2)
+ALLOW_REDIRECTS=0
+
+for var in "$@"
+do
+    if [ ${var} == "--allow-redirects" ]; then
+        ALLOW_REDIRECTS=1
+    fi
+done
 
 if [ ! -z "$FILES" ]; then
     while read -r line;
     do
         if [ ! -f ${line} ]; then
+            # Check that this line is not a common name
+            if [ ${line} == "node.js" ] || [ ${line} == "Node.js" ]; then
+                continue
+            fi
             # See if the file exists elsewhere
             FILE_PATH=$(find . -name "${line}" -type f)
             if [ -z "$FILE_PATH" ]; then
@@ -51,7 +64,10 @@ if [ ! -z "$URLS" ]; then
     while read -r line;
     do
         HTTP_STATUS=$(curl -s -o /dev/null -I -w "%{http_code}" ${line})
-        if [ "$HTTP_STATUS" != "200" ]; then
+        if [ "${HTTP_STATUS}" == "301" ] && [ ! -z ${ALLOW_REDIRECTS} ]; then
+            continue
+        fi
+        if [ "${HTTP_STATUS}" != "200" ]; then
             # The file path is empty and URL is not okay
             echo "× ${line} is invalid - returned status ${HTTP_STATUS}!"
             exit 1
