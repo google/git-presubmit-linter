@@ -16,12 +16,21 @@
 #
 # This script checks file contents against a list of regular expressions
 # In a CI system, you may pass in a list of files from a tar archive.
+#
+# For some CI systems, you may need to specify a custom IFS
+# (Internal Field Separator)
+#
 # Example usage:
 #   tar -tf archive.tar.gz | ./tools/filelist.sh listoffiles.txt
+#   tar -tf archive.tar.gz | ./tools/filelist.sh listoftiles.txt ' '
 
 if [ "$#" -lt 1 ]; then
     echo "Expected usage: '<files>' | ./tools/filelist.sh listoffiles.txt"
     exit 1
+fi
+if [ "$#" -gt 1 ]; then
+    # Set the IFS (Internal Field Separator)
+    IFS=$2
 fi
 
 REJECTED_FILES=0
