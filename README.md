@@ -136,6 +136,18 @@ a Markdown format, with the summary of each commit prepended by an asterisk.
 `./tools/changelog.sh v1.0.0` - Generates a changelog between HEAD and the provided revision
 `./tools/changelog.sh v1.0.0 v1.0.1` - Generates a changelog between the two revisions
 
+### Conventional Commit Changelog
+The [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) spec
+aims to provide semantic definitons to version control changelists.
+
+This tool will generate a changelog for a project using this spec between two
+points in your git history in a Markdown format, following the guidelines
+defined by [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+
+`./tools/conventional-changelog.sh` - Generates a changelog between HEAD and the most recent tag
+`./tools/conventional-changelog.sh v1.0.0` - Generates a changelog between HEAD and the provided revision
+`./tools/conventional-changelog.sh v1.0.0 v1.0.1` - Generates a changelog between the two revisions
+
 ### Generate sanitized archives
 This tool will generate zipped archives of specific directories and the files inside.
 Unlike a standard `zip` command, this tool will check each file against a blocklist,
