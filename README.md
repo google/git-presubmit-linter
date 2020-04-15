@@ -179,6 +179,12 @@ The `listoffiles.txt` can contain a series of regular expressions. Be sure to es
 file\\d\\.txt
 ```
 
+For some CI systems, you may need to set a custom IFS (Internal Field Separator). That can be
+a second parameter. In the example below, the IFS will be manually set to a single space. By
+default, this is typically a newline character (\n).
+
+`tar -tf myfiles.tar.gz | ./tools/filelist.sh ./listoffiles.txt " "`
+
 ### SPDX Licenses
 Code licenses can be identified using the SPDX license list in a standardized way.
 (https://spdx.org/licenses/)
