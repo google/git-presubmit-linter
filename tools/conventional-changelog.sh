@@ -70,7 +70,7 @@ declare -A security=()
 
 # Parse each commit using Conventional Commit format
 # Place it in a Keep A Changelog category
-COMMIT_REGEX="^([[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2})\|([a-z]*\!?)(\(([a-z]*)\))?:\s(.*)$"
+COMMIT_REGEX="^([[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2})\|([a-z]*\!?)(\(([A-Za-z]*)\))?:\s(.*)$"
 
 for commit in $COMMITS
 do

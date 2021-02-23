@@ -19,6 +19,31 @@ set -e
 git log -1 --pretty=%B | ./git-presubmit-linter/rules/verb-tense.sh
 ```
 
+### Complete Setup
+A more thorough test script may include a step to verify the directory
+exists before cloning, and simplify running several tests with variables:
+
+```bash
+GIT_PRESUBMIT_LINTER='git-presubmit-linter'
+RULES="${GIT_PRESUBMIT_LINTER}/rules"
+
+if [ ! -d ${GIT_PRESUBMIT_LINTER} ]; then
+    # Clone the git presubmit linter repository
+    git clone https://github.com/google/git-presubmit-linter.git
+fi
+cd ${GIT_PRESUBMIT_LINTER}
+git pull origin master
+cd ../
+
+# Check git commit for style
+git log -1 --pretty=%B | ${RULES}/verb-tense.sh imperative
+git log -1 --pretty=%B | ${RULES}/no-second-line.sh
+git log -1 --pretty=%B | ${RULES}/line-length.sh 100
+
+# Check git diff lines that have been modified for style
+git diff HEAD~1 | grep '^\+' | ${RULES}/trailing-whitespace.sh
+```
+
 ## Using Rules
 There are many rules that are available in the `rules/` directory.
 Each can be accessed in a shell script by piping a string into the
@@ -122,6 +147,13 @@ This rule verifies that no changed line has any trailing whitespace.
 Style guides may require this to be removed.
 
 `git diff HEAD~1 --pretty=%B | ./rules/trailing-whitespace.sh`
+
+### Mandate Conventional Changelog format
+This rule verifies that the commit title fits the
+[conventional changelog](https://www.conventionalcommits.org/en/v1.0.0/)
+format.
+
+`git log -1 --pretty=%B | ./rules/mandate-conventional-changelog.sh`
 
 ## Tools
 This repo also contains tools to be run during a presubmit task. These do
