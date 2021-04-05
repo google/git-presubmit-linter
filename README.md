@@ -155,6 +155,28 @@ format.
 
 `git log -1 --pretty=%B | ./rules/mandate-conventional-changelog.sh`
 
+### Check if CI is required
+This rule analyzes a commit diff and determines if any source code has changed.
+This is useful in knowing whether source code has changed or whether it was
+just documentation / code comments.
+
+For each changed file, the file extension is checked. Only a few source code
+languages are currently supported. Files to ignore include documentation,
+metadata, and images. Any file not supported will raise an error, as it may
+affect the build/tests.
+
+Errors are printed to the terminal.
+
+```bash
+git diff HEAD~1 | ./rules/require-ci.sh
+if [ $? -eq 0 ]; then
+    # No source code has changed. We can skip CI.
+    exit 0
+fi
+# If `1` is returned, that means source code was potentially changed.
+# Run build and tests
+```
+
 ## Tools
 This repo also contains tools to be run during a presubmit task. These do
 not verify the git metadata or other project details, but can produce
